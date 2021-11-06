@@ -40,13 +40,11 @@ alert(a+b );
 //Также надо разрешить пользователю остановить процесс ввода, отправив пустую строку или нажав «Отмена». В этом случае функция должна вернуть null
 function readNumber() {
   let num;
-
   do {
     num = prompt("Введите число", 0);
   } while ( !isFinite(num) );
 
   if (num === null || num === '') return null;
-
   return +num;
 }
 
@@ -65,6 +63,137 @@ alert( random(1, 5) );
 alert( random(1, 5) );
 alert( random(1, 5) );
 
+//-----------6 exempl--------------------------------------------------------------------
+//Создайте дату
+//Создайте объект Date для даты: 20 февраля 2012 года, 3 часа 12 минут. Временная зона – местная.
+//Для вывода используйте alert.
+ let dat = new Date(2012,1, 20,3,12 );
+ alert( dat );
+
+//-----------7 exempl--------------------------------------------------------------------
+//Покажите день недели
+//Напишите функцию getWeekDay(date), показывающую день недели в коротком формате: «ПН», «ВТ», «СР», «ЧТ», «ПТ», «СБ», «ВС».
+function getWeekDay(date) {
+  let days = ['ВС', 'ПН', 'ВТ', 'СР', 'ЧТ', 'ПТ', 'СБ'];
+  return days[date.getDay()];
+}
+
+let d = new Date(); // today
+alert( getWeekDay(d) ); s
+
+//-----------8 exempl--------------------------------------------------------------------
+//День недели в европейской нумерации
+//В Европейских странах неделя начинается с понедельника (день номер 1), затем идёт вторник (номер 2) и так до воскресенья (номер 7).
+// Напишите функцию getLocalDay(date), которая возвращает «европейский» день недели для даты date.
+function getLocalDay(date) {
+  return date.getDay() == 0? 7 : date.getDay (); ;
+}
+
+let d1 = new Date(); // today
+alert( getLocalDay(d1) );
+
+//-----------9 exempl--------------------------------------------------------------------
+//Какой день месяца был много дней назад?
+//Создайте функцию getDateAgo(date, days), возвращающую число, которое было days дней назад от даты date.
+//К примеру, если сегодня двадцатое число, то getDateAgo(new Date(), 1) вернёт девятнадцатое и getDateAgo(new Date(), 2) – восемнадцатое.
+//Функция должна надёжно работать при значении days=365 и больших значениях:
+
+function getDateAgo(date, n) {
+  let date2 = new Date(date);
+  date2.setDate(date.getDate() - n);
+  return date2;
+}
+
+let d2 = new Date(); // today
+let n = prompt("Введите кол-во дней назад", 0);
+alert( getDateAgo(d2, n) );
+
+//-----------10 exempl--------------------------------------------------------------------
+//Последнее число месяца?
+//Напишите функцию getLastDayOfMonth(year, month), возвращающую последнее число месяца. Иногда это 30, 31 или даже февральские 28/29.
+//Параметры:
+//year – год из четырёх цифр, например, 2012.
+//month – месяц от 0 до 11.
+//К примеру, getLastDayOfMonth(2012, 1) = 29 (високосный год, февраль).
+
+function getLastDayOfMonth(year, month) {
+  let date = new Date(year,month+1,0);
+  return date;
+}
+let y = prompt("Введите год", new Date().getFullYear());
+let m = prompt("Введите месяц", new Date().getMonth())-1;
+if (1<=m && m<=11) {
+  alert(getLastDayOfMonth (y, m) );
+}
+else {
+  alert( 'Ошибка!!!');
+}
+
+//-----------11 exempl--------------------------------------------------------------------
+//Напишите функцию getSecondsToday(), возвращающую количество секунд с начала сегодняшнего дня.
+//Например, если сейчас 10:00, и не было перехода на зимнее/летнее время, то:
+
+function getSecondsToday() {
+  let dateNow = new Date();
+  let dateStart = new Date (dateNow.getFullYear(), dateNow.getMonth(), dateNow.getDate());
+
+  let dif = (dateNow - dateStart);
+  return Math.round(dif / 1000);
+}
+alert(getSecondsToday ());
+
+//-----------12 exempl--------------------------------------------------------------------
+//Сколько секунд осталось до завтра?
+//Создайте функцию getSecondsToTomorrow(), возвращающую количество секунд до завтрашней даты./
+function getSecondsToTomorrow() {
+  let dateNow = new Date();
+  let dateTom = new Date (dateNow.getFullYear(), dateNow.getMonth(), dateNow.getDate()+1);
+
+  let dif = (dateTom-dateNow);
+  return Math.round(dif / 1000);
+}
+alert(getSecondsToTomorrow ());
+
+//-----------12 exempl--------------------------------------------------------------------
+//Напишите функцию formatDate(date), форматирующую date по следующему принципу:
+//Если спустя date прошло менее 1 секунды, вывести "прямо сейчас".
+//В противном случае, если с date прошло меньше 1 минуты, вывести "n сек. назад".
+//В противном случае, если меньше часа, вывести "m мин. назад".
+//В противном случае, полная дата в формате "DD.MM.YY HH:mm". А именно: "день.месяц.год часы:минуты", всё в виде двух цифр, т.е. 31.12.16 10:00.
+
+function formatDate(date) {
+  let dayOfMonth = date.getDate();
+  let m = date.getMonth() + 1;
+  let y = date.getFullYear();
+  let h = date.getHours();
+  let min = date.getMinutes();
+  let diffMs = new Date() - date;
+  let diffSec = Math.round(diffMs / 1000);
+  let diffMin = diffSec / 60;
+  let diffHour = diffMin / 60;
+
+  // форматирование
+  y = y.toString().slice(-2);
+  m = m < 10 ? '0' + m : m;
+  dayOfMonth = dayOfMonth < 10 ? '0' + dayOfMonth : dayOfMonth;
+  h = h < 10 ? '0' + h : h;
+  min = min < 10 ? '0' + min : min;
+
+  if (diffSec < 1) {
+    return 'прямо сейчас';
+  } else if (diffMin < 1) {
+    return `${diffSec} сек. назад`
+  } else if (diffHour < 1) {
+    return `${diffMin} мин. назад`
+  } else {
+    return `${dayOfMonth}.${m}.${y} ${h}:${min}`
+  }
+}
+
+alert( formatDate(new Date(new Date - 1)) ); // "прямо сейчас"
+alert( formatDate(new Date(new Date - 30 * 1000)) ); // "30 сек. назад"
+alert( formatDate(new Date(new Date - 5 * 60 * 1000)) ); // "5 мин. назад"
+alert( formatDate(new Date(new Date - 86400 * 1000)) );
 
 </script>
 </body>
