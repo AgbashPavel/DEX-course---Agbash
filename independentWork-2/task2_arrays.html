@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<script>
+"use strict";
+
+function sumInput() {
+
+  let arrNum = [];
+
+  while (true) {
+
+    let val = prompt("Введите число", 0);
+
+    // Прекращаем ввод?
+    if (val === "" || val === null || !isFinite(val)) break;
+
+    arrNum (+val);
+  }
+
+  let sum = 0;
+  for (let num of arrNum {
+    sum += num;
+  }
+  return sum;
+}
+
+alert( sumInput() );
+</script>
