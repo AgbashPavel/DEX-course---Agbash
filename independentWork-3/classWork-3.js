@@ -44,20 +44,33 @@
 // и считать сумму передаваемых чисел , после того как кол-во аргументов
 // будет равнятся передаваемому значению
 
- const funcCurrent = funcСurryingCount(3);
+const funcCurrent = funcСurryingCount(3);
 
- console.log("funcCurrent(1,3,4) ", funcCurrent(1, 3, 4));
- console.log("funcCurrent(1,3)(4) ", funcCurrent(1, 3)(4));
- console.log("funcCurrent(1)(3,4) ", funcCurrent(1)(3, 4));
- console.log("funcCurrent(1)(3)(4) ", funcCurrent(1)(3)(4));
-
- const func1 = () => {
-   console.log(func2());
+ function funcСurryingCount(n) {
+   return function fnSum (...args) {
+     if (args.length === n) {
+       return args.reduce((sum, s) => sum + s, 0);
+     }
+     else {
+       return function(...args2) {
+         return fnSum.apply(this, args.concat(args2));
+       };
+     };
+   };
  };
 
- const func2 = () => {
-   console.trace();
-   return "func2!!!!!!!";
- };
+console.log("funcCurrent(1,3,4) ", funcCurrent(1, 3, 4));
+console.log("funcCurrent(1,3)(4) ", funcCurrent(1, 3)(4));
+console.log("funcCurrent(1)(3,4) ", funcCurrent(1)(3, 4));
+console.log("funcCurrent(1)(3)(4) ", funcCurrent(1)(3)(4));
 
- func1();
+// const func1 = () => {
+//   console.log(func2());
+// };
+
+// const func2 = () => {
+//   console.trace();
+//   return "func2!!!!!!!";
+// };
+
+// func1();
