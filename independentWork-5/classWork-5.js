@@ -40,7 +40,7 @@ export class NewsPaper {
   }
 
   static createNewPaper(title) {
-    const date = new Date().toLocaleDateString;
+    const date = new Date().toLocaleDateString();
     return new NewsPaper (title, date);
   }
 }
@@ -54,21 +54,18 @@ export class NewsPaper {
 
 class CalculateBase {
   constructor() {
-   // this.count = 0
   }
   calculate (){
     return `CalculateBase: ${++this.count}`;
   }
-
 };
 
 class SecondCalculate extends CalculateBase {
   constructor() {
     super();
-    //this.count = 0;
   }
   calculate (){
-    return `SecondCalculate: ${++this.count} ${super.calculate}`;
+    return `SecondCalculate: ${++this.count} ${super.calculate()}`;
   }
 }
 
@@ -79,8 +76,7 @@ class ThirdCalculate extends SecondCalculate {
   }
 
   calculate () {
-    //const str = super().calculate();
-    return `ThirdCalculate: ${this.count++} ${super.calculate}` ;
+    return `ThirdCalculate: ${++this.count} ${super.calculate()}` ;
   }
 }
 console.log (new ThirdCalculate ().calculate());
@@ -90,12 +86,13 @@ console.log (new ThirdCalculate ().calculate());
 //по передаваемом типу first или second
 
 export const callCurrentModule = (type) => {
-  if (type == 'first'){
-    import ("./module1.js").then(module) => module.moduleFirst())
-  } else {
-    import ("./module2.js").then(module) => module.moduleSecond())
+  if (type === 'first'){
+    import ('./module1.js').then(module => module.moduleFirst());
+  }
+  else {
+    import ('./module2.js').then(module => module.moduleSecond());
   };
-};
+}
 
 //#5 написать функцию
 // которая выведет в консоль 'PING'
